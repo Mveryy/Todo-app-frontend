@@ -1,5 +1,5 @@
-import { TodoContextProvider } from "./context/TodoContext"
 import { Todo } from "./components/Todo/Todo"
+import { TodoContextProvider } from "./context/TodoContext"
 import { Container, Footer } from './styles.js'
 
 function App() {

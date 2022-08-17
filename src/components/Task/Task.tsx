@@ -1,21 +1,25 @@
 import axios from "axios"
 import { Trash } from "phosphor-react"
-import { ITodos } from "../../context/TodoContext"
+import { useContext } from "react"
+import TodoContext, { ITodos } from "../../context/TodoContext"
 import { SingleTask } from "./styled"
 
 export default function Task(props: { task: ITodos }) {
   const { task } = props
+  const { getData } = useContext(TodoContext)
 
   // remover task
   const handleDelete = async (id: number) => {
     await axios.delete(`https://todo-app-backend1.herokuapp.com/task/${id}`)
+    getData()
   }
 
   // alterar status done da task
-  const handleTaskChange = (id: number) => {
-    axios.patch(`https://todo-app-backend1.herokuapp.com/task/${id}`, {
+  const handleTaskChange = async (id: number) => {
+    await axios.patch(`https://todo-app-backend1.herokuapp.com/task/${id}`, {
       done: !task.done
     })
+    getData()
   }
 
   function handleClassName() {

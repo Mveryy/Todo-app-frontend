@@ -5,7 +5,7 @@ import TodoContext from "../../context/TodoContext"
 import { HeaderContainer, Input, InputsHeader } from "./styles"
 
 export default function Header() {
-  const { todos, setFilter, setTodos, setInputText, inputText, setSearch } = useContext(TodoContext)
+  const { setFilter, setInputText, inputText, setSearch, getData } = useContext(TodoContext)
 
   // adicionar nova task  
   const handleAddTask = (taskName: string) => {
@@ -14,7 +14,7 @@ export default function Header() {
         description: taskName,
         done: false
       })
-      setTodos([...todos])
+      getData()
     }
     postTask()
     setInputText('')
