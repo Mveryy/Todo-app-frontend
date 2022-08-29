@@ -21,7 +21,8 @@ interface TContext {
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   filteredTasks: ITodos[];
-  getData: () => Promise<void>
+  getData: () => Promise<void>;
+  isLoading: boolean;
 }
 
 const TodoContext = createContext<TContext>({} as TContext)
@@ -31,6 +32,7 @@ const TodoContextProvider = ({ children }: ProviderProps) => {
   const [filter, setFilter] = useState("all")
   const [inputText, setInputText] = useState("")
   const [search, setSearch] = useState("")
+  const [isLoading, setIsLoading] = useState(true)
 
   const getData = async () => {
     const res = await axios.get<ITodos[]>("https://todo-app-backend1.herokuapp.com/task")
@@ -45,6 +47,7 @@ const TodoContextProvider = ({ children }: ProviderProps) => {
       return 0;
     });
     setTodos(sortedData)
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -77,7 +80,8 @@ const TodoContextProvider = ({ children }: ProviderProps) => {
       search,
       setSearch,
       filteredTasks,
-      getData
+      getData,
+      isLoading,
     }}>
       {children}
     </TodoContext.Provider>
